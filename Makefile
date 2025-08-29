@@ -87,7 +87,7 @@ build/test:
      $(shell find $(SRC_TEST) -name "*.java")
 	@echo "✅ Compilação de testes concluída com sucesso!"
 
-test: clean/build/test clean/build build build/test
+test: kit clean/build/test clean/build build build/test
 	@java -jar $(JUNIT_JAR) \
      execute \
      --class-path $(TEST_BUILD):$(MAIN_BUILD):$(CP) \
