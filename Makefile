@@ -66,15 +66,16 @@ GJF_JAR     = $(TOOLS_DIR)/gjf.jar
 GJF_URL     = https://maven.org/maven2/com/google/googlejavaformat/google-java-format/$(GJF_VERSION)/google-java-format-$(GJF_VERSION)-all-deps.jar
 GJF_SHA256  = 32342e7c1b4600f80df3471da46aee8012d3e1445d5ea1be1fb71289b07cc735
 
+BUILD_INFO = https://gist.githubusercontent.com/tfs91/d8a380974ee7f640e0692855b643ec01/raw/4d3958befd1f77e4d62a4be8133878316e43a061/generate_build_info.rb
 
 JAVA_SOURCES = $(shell find $(SRC_MAIN) -name "*.java")
 
-DISTRO_JAR = org.x96.sys.foundation.cs.lexer.visitor.jar
+DISTRO_JAR = org.x96.sys.lexer.visitor.jar
 
 CP = $(CS_AST_JAR):$(IO_JAR):$(TOKEN_JAR):$(KIND_JAR):$(TOKENIZER_JAR):$(BUZZ_JAR)
 #:$(CS_ROUTER_JAR)
 
-build: gen-build-info libs
+build: build/info libs
 	@javac --version
 	@javac -d $(MAIN_BUILD) -cp $(CP) $(JAVA_SOURCES)
 	@echo "✅ Compilação concluída com sucesso!"
@@ -123,14 +124,8 @@ distro:
 
 tools/jacoco: tools/jacoco_cli tools/jacoco_agent
 
-gen-build-info:
-	@ruby -v
-	@echo "🔧 Gerando BuildInfo..."
-	@mkdir -p $(SRC_MAIN)/org/x96/sys/foundation/visitor/
-	@ruby scripts/build_info.rb \
-		           "org.x96.sys.foundation.visitor" > \
-	  $(SRC_MAIN)/org/x96/sys/foundation/visitor/BuildInfo.java
-	@echo "✅ BuildInfo gerado com sucesso!"
+build/info:
+	@curl -sSL $(BUILD_INFO) | ruby - $(SRC_MAIN) org.x96.sys.lexer.visitor
 
 format: tools/gjf
 	find src -name "*.java" -print0 | xargs -0 java -jar $(GJF_JAR) --aosp --replace

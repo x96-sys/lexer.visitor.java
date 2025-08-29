@@ -1,4 +1,4 @@
-package org.x96.sys.foundation.cs.lexer.visitor;
+package org.x96.sys.lexer.visitor;
 
 import org.x96.sys.lexer.token.Token;
 import org.x96.sys.lexer.tokenizer.Tokenizer;

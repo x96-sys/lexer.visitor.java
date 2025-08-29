@@ -1,6 +1,6 @@
-package org.x96.sys.foundation.cs.lexer.visitor;
+package org.x96.sys.lexer.visitor;
 
-import org.x96.sys.foundation.buzz.cs.lexer.visitor.BuzzVisitorMismatch;
+import org.x96.sys.buzz.lexer.visitor.BuzzVisitorMismatch;
 import org.x96.sys.lexer.token.Token;
 import org.x96.sys.lexer.tokenizer.Tokenizer;
 
@@ -13,8 +13,7 @@ public class AlphaLow extends Visitor {
 
     @Override
     public Token[] visit() {
-        if (look() < 0x61 || look() > 0x7A)
-            throw new BuzzVisitorMismatch(this, this.tokenizer);
+        if (look() < 0x61 || look() > 0x7A) throw new BuzzVisitorMismatch(this, this.tokenizer);
         rec(overKind());
         return stream();
     }

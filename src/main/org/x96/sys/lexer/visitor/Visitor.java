@@ -1,6 +1,6 @@
-package org.x96.sys.foundation.cs.lexer.visitor;
+package org.x96.sys.lexer.visitor;
 
-import org.x96.sys.foundation.buzz.cs.lexer.visitor.BuzzVisitorMismatch;
+import org.x96.sys.buzz.lexer.visitor.BuzzVisitorMismatch;
 import org.x96.sys.cs.ast.book.passage.pattern.modifier.Modifier;
 import org.x96.sys.cs.ast.book.passage.pattern.modifier.Shell;
 import org.x96.sys.lexer.token.Kind;
@@ -34,14 +34,6 @@ public abstract class Visitor implements Visiting {
         }
     }
 
-    /**
-     * @deprecated Use {@link #overKind()} instead.
-     */
-    @Deprecated
-    public String overkind() {
-        throw new UnsupportedOperationException("deve ser implementado pelo visitante");
-    }
-
     public String overKind() {
         throw new UnsupportedOperationException("deve ser implementado pelo visitante");
     }
@@ -67,8 +59,7 @@ public abstract class Visitor implements Visiting {
     }
 
     public Token[] stream() {
-        if (mod == null)
-            return tokens.toArray(Token[]::new);
+        if (mod == null) return tokens.toArray(Token[]::new);
 
         return tokens.stream()
                 .peek(

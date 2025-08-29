@@ -1,11 +1,8 @@
-package org.x96.sys.foundation.cs.lexer.visitor.factory;
-
-
-
+package org.x96.sys.lexer.visitor.factory;
 
 import org.x96.sys.buzz.Buzz;
-import org.x96.sys.foundation.cs.lexer.visitor.Visitor;
 import org.x96.sys.lexer.tokenizer.Tokenizer;
+import org.x96.sys.lexer.visitor.Visitor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
