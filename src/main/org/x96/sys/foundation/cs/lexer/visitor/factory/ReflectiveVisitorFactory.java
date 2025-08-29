@@ -1,8 +1,11 @@
 package org.x96.sys.foundation.cs.lexer.visitor.factory;
 
-import org.x96.sys.foundation.buzz.Buzz;
-import org.x96.sys.foundation.cs.lexer.tokenizer.Tokenizer;
+
+
+
+import org.x96.sys.buzz.Buzz;
 import org.x96.sys.foundation.cs.lexer.visitor.Visitor;
+import org.x96.sys.lexer.tokenizer.Tokenizer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +15,8 @@ public final class ReflectiveVisitorFactory {
         try {
             return cls.getConstructor(Tokenizer.class);
         } catch (NoSuchMethodException e) {
-            throw new Buzz("Não foi possível construir visitante");
+            // TODO
+            throw new Buzz(123, "?", "Não foi possível construir visitante");
         }
     }
 
@@ -20,7 +24,8 @@ public final class ReflectiveVisitorFactory {
         try {
             return build(cls).newInstance(tokenizer);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new Buzz("Não foi possível instanciar visitante");
+            // TODO
+            throw new Buzz(1234, "??", "Não foi possível construir visitante");
         }
     }
 }

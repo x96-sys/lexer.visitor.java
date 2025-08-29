@@ -3,7 +3,7 @@ package org.x96.sys.foundation.cs.lexer.visitor;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.x96.sys.foundation.cs.lexer.token.Token;
+import org.x96.sys.lexer.token.Token;
 
 import java.lang.reflect.Method;
 

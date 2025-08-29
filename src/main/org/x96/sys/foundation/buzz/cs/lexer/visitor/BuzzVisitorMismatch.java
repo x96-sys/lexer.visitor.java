@@ -1,9 +1,10 @@
 package org.x96.sys.foundation.buzz.cs.lexer.visitor;
 
-import org.x96.sys.foundation.buzz.Buzz;
-import org.x96.sys.foundation.cs.lexer.router.architecture.Analyzer;
-import org.x96.sys.foundation.cs.lexer.tokenizer.Tokenizer;
+import org.x96.sys.buzz.Buzz;
+//        avoiding java dependency cycle
+//import org.x96.sys.foundation.cs.lexer.router.architecture.Analyzer;
 import org.x96.sys.foundation.cs.lexer.visitor.Visitor;
+import org.x96.sys.lexer.tokenizer.Tokenizer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,11 +21,11 @@ public class BuzzVisitorMismatch extends Buzz {
         sb.append(
                 String.format(
                         """
-                        Atual visitante [%s] encontrou token [0x%X] inesperado;
-                           > Tokenizer.pointer[%s]
-                           > Tokens Allowed [%s]
-                        %s\
-                        """,
+                                Atual visitante [%s] encontrou token [0x%X] inesperado;
+                                   > Tokenizer.pointer[%s]
+                                   > Tokens Allowed [%s]
+                                %s\
+                                """,
                         v.visitorName(),
                         t.look(),
                         t.pointer(),
@@ -35,9 +36,10 @@ public class BuzzVisitorMismatch extends Buzz {
 
     public static String[] discovery(Visitor v) {
         List<String> l = new LinkedList<>();
-        for (int i : Analyzer.discovery(v.getClass(), 0, 0x80)) {
-            l.add(String.format("0x%X", i));
-        }
+//        for (int i : Analyzer.discovery(v.getClass(), 0, 0x80)) {
+//            l.add(String.format("0x%X", i));
+//        }
+//        avoiding java dependency cycle
         return l.toArray(String[]::new);
     }
 
@@ -74,12 +76,11 @@ public class BuzzVisitorMismatch extends Buzz {
         }
 
         if (insertIndex != -1 && insertIndex < rawline.length()) {
-            rawline =
-                    rawline.substring(0, insertIndex)
-                            + RED
-                            + rawline.charAt(insertIndex)
-                            + RESET
-                            + rawline.substring(insertIndex + 1);
+            rawline = rawline.substring(0, insertIndex)
+                    + RED
+                    + rawline.charAt(insertIndex)
+                    + RESET
+                    + rawline.substring(insertIndex + 1);
         }
 
         String currentLine = String.format("%s%s | %s%n", i, l, rawline);

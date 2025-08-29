@@ -1,8 +1,8 @@
 package org.x96.sys.foundation.cs.lexer.visitor;
 
 import org.x96.sys.foundation.buzz.cs.lexer.visitor.BuzzVisitorMismatch;
-import org.x96.sys.foundation.cs.lexer.token.Token;
-import org.x96.sys.foundation.cs.lexer.tokenizer.Tokenizer;
+import org.x96.sys.lexer.token.Token;
+import org.x96.sys.lexer.tokenizer.Tokenizer;
 
 // alpha_low = [0x61-0x7A];
 public class AlphaLow extends Visitor {

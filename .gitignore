@@ -11,3 +11,4 @@ src/main/org/x96/sys/foundation/visitor/BuildInfo.java
 .idea
 .zig-cache
 *.iml
+.DS_Store

@@ -1,11 +1,11 @@
 package org.x96.sys.foundation.cs.lexer.visitor;
 
 import org.x96.sys.foundation.buzz.cs.lexer.visitor.BuzzVisitorMismatch;
-import org.x96.sys.foundation.cs.ast.book.passage.pattern.modifier.Modifier;
-import org.x96.sys.foundation.cs.ast.book.passage.pattern.modifier.Shell;
-import org.x96.sys.foundation.cs.lexer.token.Kind;
-import org.x96.sys.foundation.cs.lexer.token.Token;
-import org.x96.sys.foundation.cs.lexer.tokenizer.Tokenizer;
+import org.x96.sys.cs.ast.book.passage.pattern.modifier.Modifier;
+import org.x96.sys.cs.ast.book.passage.pattern.modifier.Shell;
+import org.x96.sys.lexer.token.Kind;
+import org.x96.sys.lexer.token.Token;
+import org.x96.sys.lexer.tokenizer.Tokenizer;
 
 import java.util.Arrays;
 import java.util.LinkedList;
