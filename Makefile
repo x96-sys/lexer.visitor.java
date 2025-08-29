@@ -33,10 +33,10 @@ TOKENIZER_JAR     = $(LIB_DIR)/org.x96.sys.lexer.tokenizer.jar
 TOKENIZER_URL     = https://github.com/x96-sys/lexer.tokenizer.java/releases/download/v$(TOKENIZER_VERSION)/org.x96.sys.lexer.tokenizer.jar
 TOKENIZER_SHA256  = 21a10167ffd798f1fa9cbbda1382650a411c826b957bf3cc607863696bf4e8f7
 
-CS_ROUTER_VERSION = 0.1.3
-CS_ROUTER_JAR     = $(LIB_DIR)/org.x96.sys.foundation.cs.lexer.router.jar
-CS_ROUTER_URL     = https://github.com/x96-sys/cs.lexer.router.java/releases/download/v$(CS_ROUTER_VERSION)/org.x96.sys.foundation.cs.lexer.router.jar
-CS_ROUTER_SHA256  = 3a13ef7e655e0dcce4e94a95b9ae092ed61d8ba53d3eb261ccae67105c61c68e
+ROUTER_VERSION = 0.2.0
+ROUTER_JAR     = $(LIB_DIR)/org.x96.sys.lexer.router.jar
+ROUTER_URL     = https://github.com/x96-sys/cs.lexer.router.java/releases/download/v$(ROUTER_VERSION)/org.x96.sys.lexer.router.jar
+ROUTER_SHA256  = 88ebc66c8da8fc7056716b4cc8ce24cd1f6a487e3fb9d3d7173cfd95f0c6719b
 
 CS_AST_VERSION = 1.0.0
 CS_AST_JAR     = $(LIB_DIR)/org.x96.sys.cs.ast.jar
@@ -66,14 +66,16 @@ GJF_JAR     = $(TOOLS_DIR)/gjf.jar
 GJF_URL     = https://maven.org/maven2/com/google/googlejavaformat/google-java-format/$(GJF_VERSION)/google-java-format-$(GJF_VERSION)-all-deps.jar
 GJF_SHA256  = 32342e7c1b4600f80df3471da46aee8012d3e1445d5ea1be1fb71289b07cc735
 
-BUILD_INFO = https://gist.githubusercontent.com/tfs91/d8a380974ee7f640e0692855b643ec01/raw/4d3958befd1f77e4d62a4be8133878316e43a061/generate_build_info.rb
+BUILD_INFO = https://gist.githubusercontent.com/tfs91/7c050b5c822c6f247aa0ab193be3d35d/raw/8d91e9f98dce6f606b7a375ab76891906f9b08dc/gen_build_info.rb
 
 JAVA_SOURCES = $(shell find $(SRC_MAIN) -name "*.java")
 
 DISTRO_JAR = org.x96.sys.lexer.visitor.jar
 
-CP = $(CS_AST_JAR):$(IO_JAR):$(TOKEN_JAR):$(KIND_JAR):$(TOKENIZER_JAR):$(BUZZ_JAR)
-#:$(CS_ROUTER_JAR)
+CP = $(CS_AST_JAR):$(IO_JAR):$(TOKEN_JAR):$(KIND_JAR):$(TOKENIZER_JAR):$(BUZZ_JAR):$(ROUTER_JAR)
+
+build/info:
+  @curl -sSL $(BUILD_INFO) | ruby - src/main/ org.x96.sys.lexer.visitor
 
 build: build/info libs
 	@javac --version
@@ -91,7 +93,7 @@ test: clean/build/test clean/build build build/test
      --class-path $(TEST_BUILD):$(MAIN_BUILD):$(CP) \
      --scan-class-path
 
-coverage-run: build-test tools/jacoco
+coverage-run: build/test tools/jacoco
 	@java -javaagent:$(JACOCO_AGENT_JAR)=destfile=$(BUILD_DIR)/jacoco.exec \
        -jar $(JUNIT_JAR) \
        execute \
@@ -108,13 +110,13 @@ coverage-report: tools/jacoco
 
 coverage: coverage-run coverage-report
 	@echo "✅ Relatório de cobertura disponível em: build/coverage/index.html"
-	@echo "🌐 Abrir com: open build/coverage/index.html"
+	@echo "🌐 Abrir com: open out/coverage/index.html"
 
-test-method: build-test ## Executa teste específico (METHOD="org.x96.sys.foundation.cs.lexer.visitor.entry.terminals.c4.LatinCapitalLetterITest#happy")
+test-method: build/test ## Executa teste específico (METHOD="org.x96.sys.foundation.cs.lexer.visitor.entry.terminals.c4.LatinCapitalLetterITest#happy")
 	@echo "🧪 Executando teste: $(METHOD)"
 	@java -jar $(JUNIT_JAR) --class-path $(TEST_BUILD):$(MAIN_BUILD):$(CP) --select "method:$(METHOD)"
 
-test-class: build-test ## Executa classe de teste (CLASS="nome.da.Classe")
+test-class: build/test ## Executa classe de teste (CLASS="nome.da.Classe")
 	@echo "🧪 Executando classe: $(CLASS)"
 	@java -jar $(JUNIT_JAR) --class-path $(TEST_BUILD):$(MAIN_BUILD):$(CP) --select "class:$(CLASS)"
 
@@ -174,7 +176,7 @@ $(eval $(call deps,lib,io,IO))
 $(eval $(call deps,lib,token,TOKEN))
 $(eval $(call deps,lib,tokenizer,TOKENIZER))
 $(eval $(call deps,lib,kind,KIND))
-$(eval $(call deps,lib,cs-router,CS_ROUTER))
+$(eval $(call deps,lib,cs-router,ROUTER))
 $(eval $(call deps,lib,cs-ast,CS_AST))
 $(eval $(call deps,lib,buzz,BUZZ))
 

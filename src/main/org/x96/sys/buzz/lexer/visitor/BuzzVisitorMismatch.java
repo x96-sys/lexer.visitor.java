@@ -1,10 +1,9 @@
 package org.x96.sys.buzz.lexer.visitor;
 
 import org.x96.sys.buzz.Buzz;
-//        avoiding java dependency cycle
-// import org.x96.sys.foundation.cs.lexer.router.architecture.Analyzer;
 import org.x96.sys.lexer.tokenizer.Tokenizer;
 import org.x96.sys.lexer.visitor.Visitor;
+import org.x96.sys.router.architecture.Analyzer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,10 +35,9 @@ public class BuzzVisitorMismatch extends Buzz {
 
     public static String[] discovery(Visitor v) {
         List<String> l = new LinkedList<>();
-        //        for (int i : Analyzer.discovery(v.getClass(), 0, 0x80)) {
-        //            l.add(String.format("0x%X", i));
-        //        }
-        //        avoiding java dependency cycle
+        for (int i : Analyzer.discovery(v.getClass(), 0, 0x80)) {
+            l.add(String.format("0x%X", i));
+        }
         return l.toArray(String[]::new);
     }
 
